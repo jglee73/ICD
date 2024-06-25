@@ -1,0 +1,6 @@
+; PHY_IO__SW_LINK.def : Declares the module parameters for the DLL.
+
+LIBRARY      "PHY_IO__SW_LINK"
+
+EXPORTS
+    ; Explicit exports can go here

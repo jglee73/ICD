@@ -1,0 +1,6 @@
+; Phy_IO__DNET_HILSCHER.def : Declares the module parameters for the DLL.
+
+LIBRARY      "Phy_IO__DNET_HILSCHER"
+
+EXPORTS
+    ; Explicit exports can go here

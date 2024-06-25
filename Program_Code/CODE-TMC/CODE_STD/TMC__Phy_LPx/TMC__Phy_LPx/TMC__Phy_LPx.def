@@ -1,0 +1,6 @@
+; TMC__Phy_LPx.def : Declares the module parameters for the DLL.
+
+LIBRARY      "TMC__Phy_LPx"
+
+EXPORTS
+    ; Explicit exports can go here

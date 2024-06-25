@@ -1,0 +1,6 @@
+; Phy_IO__DNET_HILSCHER_CIFX.def : Declares the module parameters for the DLL.
+
+LIBRARY      "Phy_IO__DNET_HILSCHER_CIFX"
+
+EXPORTS
+    ; Explicit exports can go here

@@ -1,0 +1,6 @@
+; Phy_RS232__BROOKS_ROBOT.def : Declares the module parameters for the DLL.
+
+LIBRARY      "Phy_RS232__BROOKS_ROBOT"
+
+EXPORTS
+    ; Explicit exports can go here

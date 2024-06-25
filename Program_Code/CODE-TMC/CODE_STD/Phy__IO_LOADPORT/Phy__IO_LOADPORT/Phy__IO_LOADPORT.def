@@ -1,0 +1,6 @@
+; Phy__IO_LOADPORT.def : Declares the module parameters for the DLL.
+
+LIBRARY      "Phy__IO_LOADPORT"
+
+EXPORTS
+    ; Explicit exports can go here

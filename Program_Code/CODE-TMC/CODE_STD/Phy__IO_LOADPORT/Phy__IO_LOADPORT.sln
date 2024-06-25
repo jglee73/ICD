@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Phy__IO_LOADPORT", "Phy__IO_LOADPORT\Phy__IO_LOADPORT.vcproj", "{A70DB2BE-3E23-4434-8D81-9B36676B9475}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A70DB2BE-3E23-4434-8D81-9B36676B9475}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A70DB2BE-3E23-4434-8D81-9B36676B9475}.Debug|Win32.Build.0 = Debug|Win32
+		{A70DB2BE-3E23-4434-8D81-9B36676B9475}.Release|Win32.ActiveCfg = Release|Win32
+		{A70DB2BE-3E23-4434-8D81-9B36676B9475}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
