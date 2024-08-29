@@ -1,0 +1,250 @@
+
+# EQP_Engine - Ver_2.0 (2022_12_23)
+
+  1. "..\EQP_Link_Res\Core_Header\EQP_HEADER__Core_Link.h"
+
+     * 추가된 Class 함수 
+        class CI_SEQ_DB__CTRL
+        {
+	         // ...
+	         virtual int Change__System_File(const CString& file_name) = 0;
+           virtual int Set__Debug_Property(const bool active_debug, const CStringArray& l_para) = 0;
+        };
+
+        1) virtual int Change__System_File(const CString& file_name) = 0;
+           아래의 Default 설정된 EQP_SYSTEM.cfg 파일을 다른 파일로 변경할 수 있는 함수를 추가함.
+             "..\EQP\EQP_INF\EQP_SYSTEM.cfg" 
+
+        2) virtual int Set__Debug_Property(const bool active_debug, const CStringArray& l_para) = 0;
+           디버그 모드 실행을 위해 추가한 함수 입니다.
+           관련 설명은 "..\_Debugging_절차" 폴더내 자료를 참고하세요.
+    
+     * 추가 등록된 Class 
+        class CII_EQP_CORE__SYSTEM_CTRL
+        {
+     	     virtual int Get__OBJECT_LIST(CStringArray& l__obj_name) = 0;
+           virtual int Get__OBJECT_LIST(CStringArray& l__obj_name, CStringArray& l__obj_sts) = 0;
+
+	         virtual int Get__OBJECT_COUNT_IN_RUN_STATE() = 0;
+	         virtual int Get__OBJECT_LIST_IN_RUN_STATE(CStringArray& l__obj_name) = 0;
+
+	         virtual int Abort__OBJECT_IN_RUN_STATE(const bool active_all, const CString& obj_name, CStringArray& l__abort_obj) = 0;
+        };
+        
+        * 이 Class는 EQP 프로그램 내의 등록된 모든 Object 상태 정보를 Monitoring하기 위해 추가한 class 닙니다.
+        
+        1) virtual int Get__OBJECT_LIST(CStringArray& l__obj_name) = 0;
+           실행 중인 EQP 프로그램 내에 등록된 모든 Object 들을 받아오는 함수
+             
+        2) virtual int Get__OBJECT_LIST(CStringArray& l__obj_name, CStringArray& l__obj_sts) = 0;
+           실행 중인 EQP 프로그램 내에 등록된 모든 Object 들과 Object 상태들을 받아오는 함수
+     
+        3) virtual int Get__OBJECT_COUNT_IN_RUN_STATE() = 0;
+           Run 상태의 Object 수를 리턴한다.
+
+        4) virtual int Get__OBJECT_LIST_IN_RUN_STATE(CStringArray& l__obj_name) = 0;
+           Run 상태의 모든 Object List를 리턴한다.
+
+	      5) virtual int Abort__OBJECT_IN_RUN_STATE(const bool active_all, const CString& obj_name, CStringArray& l__abort_obj) = 0;
+           Run 상태의 모든 Object 또는 특정 Object를 강제 Abort 시키는 함수
+
+  2. "..\EQP_Link_Res\Apps_Header\EQP\INTERFACE\OBJECT_INTERFACE.h"
+   
+     * 추가된 Class 함수 
+        class CII_CTRL__ANALOG_IO
+        {
+           // ...
+	         virtual int Change__LOG_INTERVAL() = 0;
+	        virtual int Change__LOG_EVENT() = 0;
+        };
+
+        class CII_CTRL__DIGITAL_IO
+        {
+	         // ...
+           virtual int Change__LOG_INTERVAL() = 0;
+           virtual int Change__LOG_EVENT() = 0;
+        };
+
+        class CII_CTRL__STRING_IO
+        {
+           // ...
+           virtual int Change__LOG_INTERVAL() = 0;
+           virtual int Change__LOG_EVENT() = 0;
+        };
+
+        * Analog, Digital 또는 String Channel을 Event 또는 Interval Logging 항목에 추가할 수 있는 함수
+
+        1) virtual int Change__LOG_INTERVAL() = 0;
+           Interval Logging Channel로 등록
+           
+        2) virtual int Change__LOG_EVENT() = 0;
+           Event Logging Channel로 등록
+
+     * 추가된 Class 함수 
+        class CII__VAR_ANALOG_CTRL
+        {
+           // ...
+           virtual CString Get__STRING() = 0;
+           virtual int Change__DATA_UNIT(const CString& str_unit) = 0;
+        };
+
+        1) virtual CString Get__STRING() = 0;
+           Analog Channel의 값을 String으로 반환하는 함수
+
+        2) virtual int Change__DATA_UNIT(const CString& str_unit) = 0;
+           Analog Channel의 단위 정보를 뱐경하는 함수
+
+     * 추가된 Class 함수 
+        class CII_OBJECT__VARIABLE
+        {
+           // ...  
+	         virtual void Wait__SINGLE_OBJECT(const double ref_sec = 0.0) = 0;
+        };
+
+        1) virtual void Wait__SINGLE_OBJECT(const double ref_sec = 0.0) = 0;
+           ref_sec 설정된 타임(sec) 만큼 지연 되는 함수
+
+     * 추가된 Class 함수 
+        class CII_DEFINE__IO_PARAMETER
+        {
+           // ...
+           virtual int Set__DRIVER_DEADLOCK_TIMEOUT(const double cfg_sec) = 0;
+           virtual double Get__DRIVER_DEADLOCK_TIMEOUT() = 0;						// Default : 30.0 sec, Min : 10.0 sec 
+           virtual CString Get__IO_FILE() = 0;
+        };
+     
+        1) virtual int Set__DRIVER_DEADLOCK_TIMEOUT(const double cfg_sec) = 0;
+           IO Driver 함수 내에서 Deadlock 발생 여부를 판단할 timeout (sec)을 설정하는 함수
+
+        2) virtual double Get__DRIVER_DEADLOCK_TIMEOUT() = 0;	
+           현재 설정된 timeout (sec) 값을 리턴하는 함수
+
+        3) virtual CString Get__IO_FILE() = 0;
+           해당 IO Object에 등록된 IO File 명을 리턴하는 함수
+
+
+# Module_Linker : Core Engine Update
+  * Link_Object 내 Status 정보 둥기 문제 Patch함.
+    예) CTC & TMC 또는 TMC & PMC 간의 동작 명령이 10 msec 이내로 처리되는 경우
+      하위 Module의 Object Status 정보가 Update 되지 않는 문제
+
+
+# EQP_Engine - Ver_2.0 (2022_12_31)
+
+  1. Stack Memory를 1MB 에서 10MB로 변경함.
+    * EQP__Core_Link.dll
+    * EQP__NET_Link.dll
+    * EQP__FA_Link.dll
+    * EQP__CTC_Link.dll 
+  
+  2. Application Object 함수 호출에 대한 Exception 처리 기능 추가함.
+    * try - catch 항목 추가
+
+
+# EQP_Engine - Ver_2.0 (2023_01_30)
+
+  1. 아래의 EQP Core Header 파일에 기능 추가함.
+    "C:\Module_Linker\EQP_Link_Res\Apps_Header\EQP\UTILITY\IEQP_HEADER__CTC_LINK.h"
+    class SCI__CTC__SCH_MATERIAL_CTRL
+    {
+      ...
+	
+	    // LLx_OUT : INFO ...
+	    virtual int  Get__COOLING_SEC_OF_LLx_OUT(const int port_id,const int slot_id,
+			                        								 const int ll_id,
+										                           CString& ll_cooling_sec) = 0;
+
+	    virtual int  Get__COOLING_SEC_OF_LLx_OUT(const CString& material_pos,
+											                         const int ll_id,
+											                         CString& ll_cooling_sec) = 0;
+    }
+
+
+# EQP_Engine - Ver_2.0 (2023_02_08)
+
+  1. EQP__NET_Link 관련 아래의 Code를 Patch 함.
+    * Socket Error 상태 일때, LeaveCriticalSection( .. ) 하지 않고 함수를 Return하는 문제를 Patch함.      
+    
+    int CHSMS_Msg_Ctrl__Client::Send__MSG(const int msg_type,int& req_msg_id)
+    {
+	    EnterCriticalSection(&mCS_LOCK);    
+	    
+    	if(pSOCKET == NULL)					      return -1;
+	    if(*pSOCKET == INVALID_SOCKET)		return -1;
+
+      ...
+      
+	    LeaveCriticalSection(&mCS_LOCK);    
+	  }
+
+  2. EQP__Core_Link 관련 아래의 Code를 수정함.
+    * 사용하지 않는 "[channel].x_history" 파일 제거함.
+  
+
+# EQP_Engine - Ver_2.0 (2023_03_01)
+
+  1. "..\EQP_Link_Res\Apps_Header\EQP\UTILITY\EQP_HEADER__CTC_LINK.h"
+
+    * 추가된 Class 함수 
+       class SCI__CTC__SCH_MATERIAL_CTRL
+       {
+          ...
+	        virtual int  Set__USER_DEF_DATA(const CString& main_name,
+									                        const CString& sub_name,
+									                        const CString& set_data) = 0;
+	        virtual int  Get__USER_DEF_DATA(const CString& main_name,
+									                        const CString& sub_name,
+									                        CString& rcv_data) = 0;
+
+	        virtual int  Clear__USER_DEF_INFO(const CString& main_name) = 0;
+	        virtual int  Clear__USER_DEF_INFO(const CString& main_name,
+									                          const CString& sub_name) = 0;
+       }									                          
+ 
+
+# EQP_Engine - Ver_2.0 (2023_04_07)
+
+  1. EQP__Core_Link.dll
+    * Process Datalog의 최소 시간을 0.1 sec에서 0.05 sec로 변경함. 
+
+
+# EQP_Engine - Ver_2.0 (2023_04_13)
+
+  1. EQP__Utility_Link.dll
+    * class SCI__RECIPE_FILE
+      {
+	       ...
+       	 virtual int Upload__FILE(const CString& file) = 0;
+      };
+     
+      위의 Class 함수 Upload__FILE() 실행시
+        Analog, String Type인 경우 Recipe File에 저장된 값이 공백이더라도 Recipe Channel에 설정 되도록 수정함. 
+         
+
+# EQP_Engine - Ver_2.0 (2023_04_14)
+
+  1. "..\EQP_Link_Res\Apps_Header\EQP\UTILITY\EQP_HEADER__CTC_LINK.h"
+    * class SCI__CTC__SCH_MATERIAL_CTRL
+	    {
+	       ... 
+	       virtual int  Check__STx_N2_PURGE_OF_EDIT_TYPE(const int port_id) = 0;
+	    };
+
+      위의 Class 함수 Check__STx_N2_PURGE_OF_EDIT_TYPE() 추가함.
+        Job 살행시 해당 load port에서 STx의 N2 PURGE를 할지? 판단하는 기능
+        Return 값이 0 보다 크면, N2 PURGE가 "YES"로 설정된 상태.
+        
+
+# EQP_Engine - Ver_2.0 (2023_06_30)
+
+  1. EQP__NET_Link.dll
+    * SUI로부터 전달 받은 Page 정보를 아래의 폴더에 저장한다.
+      "..\EQP_REPORT\PAGE_INFO"
+
+
+# SUI_Engine - Ver_2.0 (2023_06_30)
+
+  1. SUI__NET_CTRL.dll & SUI__MODULE_CTRL.dll
+    * Channel DB 에서 Chanel Name 으로 검색시 대문자를 기준으로 하도록 수정함.
+    * Channel 이름의  대소문자를 구별하지 않음. 
+
