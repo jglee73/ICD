@@ -252,9 +252,10 @@
 # EQP_Engine - Ver_2.1 (2026_04_19)
   
   1. Local PC에서 EtherCAT Driver를 실행시키는 기능을 추가함.
-    다음 Core Class를 통해 실행되며
-	Sample Code : "..\WORK_GITHUB\ICD\Program_Code\CODE_PMC\PART_Code\PART - ECAT_DRIVER\IO__ECAT_SAMPLE.7z"
-	Sample Program : ".. 
+    다음 SCX__ECAT_LINK class를 통해 실행됩니다.
+	Sample Code : "https://github.com/jglee73/ICD/blob/main/Program_Code/CODE_PMC/PART_Code/PART%20-%20ECAT_DRIVER/IO__ECAT_SAMPLE.7z"
+	  * 검색 keyword : mX__ECAT_LINK
+	Sample Program : "https://github.com/jglee73/ICD/blob/main/Program_ECAT/PMC__ECAT_SAMPLE.7z"
 
 class SCI__ECAT_LINK
 {
