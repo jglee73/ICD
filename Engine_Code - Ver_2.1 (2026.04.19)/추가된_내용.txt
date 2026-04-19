@@ -262,10 +262,54 @@ class SCI__ECAT_LINK
 public:
 	virtual ~SCI__ECAT_LINK(){};
 
-	virtual int Find__Adapters() = 0;
-	virtual int Get__Adapter_List(CStringArray& l_name, CStringArray& l_description) = 0;
+	virtual int Find__Adapters() = 0;   // 시스템에 존재하는 모든 네트워크 어댑터를 검색합니다.
+	virtual int Get__Adapter_List(CStringArray& l_name, CStringArray& l_description) = 0;   // 검색된 어댑터의 시스템 이름과 설명(Description) 리스트를 가져옵니다.
+
+	virtual int  Call__Adapter_Open(char* adapter_name) = 0;   // 특정 어댑터를 열어 EtherCAT 통신을 시작할 준비를 합니다.
+	virtual int  Call__Slave_Scan() = 0;   // EtherCAT에 연결된 Slave들을 Scan 합니다.
+	virtual int  Call__Adapter_Close() = 0;   // 열려 있는 어댑터와의 연결을 닫고 통신을 종료합니다. 
+	virtual void Save__Slave_Info(const CString& dir_root, const bool active_add, const CString& add_data) = 0;   // 스캔된 슬레이브 정보를 파일로 저장하여 구성 상태를 기록합니다.
+
+    virtual int  Get__SLAVE_COUNT() = 0;   // 현재 네트워크에서 물리적으로 인식된 전체 슬레이브 개수를 반환합니다.
+	virtual int  Call__SI_MAP_SII(int slave_index) = 0;   // 특정 슬레이브의 SII(Slave Information Interface) 데이터를 읽어와 메모리에 맵핑합니다.
+
+	virtual int  Start__ECAT_RxPDO_WRITE() = 0;   // 실시간 데이터 교환(PDO)의 쓰기 스레드를 시작합니다. 
+	virtual int  Start__ECAT_TxPDO_READ() = 0;   // 실시간 데이터 교환(PDO)의 읽기 스레드를 시작합니다. 
 
 	// ...
+	virtual void Set__STATE_OF_RxPDO_WRITE(const bool active_state) = 0;   // 출력 데이터(RxPDO)의 쓰기 동작을 활성화 또는 비활성화합니다.
+	virtual void Set__STATE_OF_INIT_SLAVE_DURING_RESCAN(const bool active_state) = 0;
+
+	virtual bool Check__STATE_OF_PDO_MONITORING() = 0;
+	virtual void Set__STATE_OF_PDO_MONITORING(const bool active_state) = 0;   // PDO 통신의 모니터링 기능을 켜거나 끕니다.
+	
+	// ...
+	virtual void Clear__Link_MacID() = 0;   // 기존에 설정된 노드 ID와 MacID 사이의 매핑 정보를 모두 초기화합니다.
+	virtual void Add__Link_MacID(const int mac_id, const int node_x) = 0;   // 특정 물리적 MacID를 소프트웨어에서 사용하는 노드 ID(node_x)에 등록합니다.
+	virtual int  Get__Link_MacID(const int node_x) = 0;   // 특정 노드 ID에 매핑된 MacID를 찾아 반환합니다.
+	virtual	void Get__Link_MacID(CUIntArray& l_mac_id, CUIntArray& l_node_x) = 0;
+
+	// ...
+	virtual int  Get__Node_Info_Of_Node_Index(const int node_index, _ECAT_LINK__NODE_INFO& node_info) = 0;   // 특정 인덱스나 ID를 가진 슬레이브의 상세 정보(이름, PDO 크기 등)를 구조체 형태로 가져옵니다.
+	virtual int  Get__Slave_Info_Of_Slave_ID(const int slave_id, _ECAT_LINK__SLAVE_INFO& slave_info) = 0;
+	
+	virtual int  Get__EC_STATE(const int slave_id) = 0;
+	virtual int  Get__EC_STATE_OF_MAC_ID(const int mac_id) = 0;   // 슬레이브의 현재 EtherCAT 상태(Init, Pre-Op, Safe-Op, Op 등) 코드를 반환합니다.
+	virtual bool Check__EC_STATE_OPERATIONAL_OF_MAC_ID(const int mac_id) = 0;   // 슬레이브가 정상 데이터 교환이 가능한 'Operational(OP)' 상태인지 여부를 확인합니다.
+
+	// ...	
+	virtual bool Check_ACTIVE_NODE_OF_MAC_ID(const unsigned int mac_id) = 0;   // 해당 MacID를 가진 노드가 현재 네트워크상에서 활성화(Online)되어 있는지 확인합니다.
+	
+	virtual CString Get__TxPDO_INFO_OF_MAC_ID(const unsigned int mac_id) = 0;   // 장치의 입력 데이터를 문자열 형태로 일괄 취득합니다.
+	virtual CString Get__TxPDO_FIRST_INFO_OF_MAC_ID(const unsigned int mac_id) = 0;
+	virtual int  Get_DI__TxPDO_INFO_OF_MAC_ID(const unsigned int mac_id,const unsigned int ch_id) = 0;   // 특정 MacID 장치의 특정 채널(ch_id)로부터 디지털 입력(DI) 상태를 읽어옵니다.
+
+	virtual int  Set__RxPDO_INFO_OF_MAC_ID(const unsigned int mac_id, const CString& set_info) = 0;   // 장치에 출력할 데이터를 문자열 형태로 설정합니다.
+	virtual int  Set_SO__RxPDO_INFO_OF_MAC_ID(const unsigned int mac_id, const unsigned int ch_id, const CString& set_info) = 0;
+	virtual int  Set_DO__RxPDO_INFO_OF_MAC_ID(const unsigned int mac_id, const unsigned int ch_id, const unsigned int item_index) = 0;   // 특정 MacID 장치의 특정 채널에 디지털 출력(DO) 값을 설정합니다.
+
+	// ...
+	virtual void Print__ALL_SLAVE_INFO() = 0;   // 현재 연결된 모든 슬레이브의 정보를 디버깅 용도로 콘솔에 출력합니다.
 };
 
 class SCX__ECAT_LINK
