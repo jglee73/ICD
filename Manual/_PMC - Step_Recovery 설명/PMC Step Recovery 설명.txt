@@ -1,0 +1,25 @@
+
+# Process 중에 Step Error가 발생시 선택 가능한 Recovery Option
+  * 참고 Page "PMC Step Recovery Option.jpg"
+
+1. [RESTART] 
+  * 첫번째 Step부터 Process를 다시 시작 됩니다.
+
+2. [ABORT]
+  * Process 가 Abort 됩니다.
+    PM 상태는 "MAINTMODE"로 전환 됩니다.  
+
+3. [JUMP]
+  * 참고 Page "PMC Step Recovery Jump.jpg"
+  * [Jump]를 선택하면, "Jump Mode Step Number"에 설정된 값으로 Step을 다시 시작한다.
+  * [Continue]를 선택하면, "Continue Mode Over-Step Time(sec)"에 설정된 값에 따라 아래의 동작을 수행한다.
+    -. "Continue Mode Over-Step Time(sec)"에 설정 값이 '0' 이면, 다음 Step부터 진행된다.
+    -. "Continue Mode Over-Step Time(sec)"에 설정 값이 '0' 보다 크면, 설정된 값으로 Step Time를 설정하고 현재 Step이 진행된다.
+
+4. [END]
+  * Process 더이상 진행하지 않고 현상태를 정상으로 보고한다.
+  
+5. [END_WITH_PLASMA_DECHUCK[
+  * Recipe Config Page > "ABORT_DECHUCK" 항목에 등록된 Dechuck Recipe를 수행하고, 
+    정상으로 완료 되었다고 보고한다.
+  

@@ -1,0 +1,20 @@
+
+# Write Setup Report
+  Ex)
+    UserID  :  jglee
+    PART    :  mfc_01
+    Memo    :  수리 완료
+  위의 정보를 [Save] 버튼을 눌러 저장한다.
+ 
+# Search Setup History
+  []Date 
+    이 option이 선택되면, 선택된 날짜의 정보들만 List에 나타납니다. 
+  []UserID
+    이 option이 선택되면, 선택된 UserID의 정보들만 List에 나타납니다. 
+  []PART
+    이 option이 선택되면, 선택된 PART의 정보들만 List에 나타납니다. 
+  []View_all 
+    이 check-box가 선택되면, 저장된 모든 정보를 볼 수 있다.
+    이 option이 선택되면, 위의 []Date, []UserID, []PART 들의 check-box들이 Release 됩니다.
+    
+  

@@ -1,0 +1,19 @@
+
+# Command   :  EQP__START_R.exe
+  * CStringArray를 사요하는 경우는 EQP__START_D.exe 사용해햐 합니다.
+  
+# Arguments :  -D  (1)  (2)  (3)  (4)  (5)
+   * (1) : object name 
+   * (2) : object type
+           STD  IO  INTERLOCK  LINK  FA    
+   * (3) : dll name    (.dll 제외)
+   * (4) : class name 
+   * (5) : dir root
+
+   ex)
+     -D  OBJ_DEBUG  STD  PMC_DEBUG  DEBUG.STD  "D:\WORK_GITHUB\PSK\CODE_PMC\PMC_DEBUG\Debug"
+     -D  FNC_STEP  STD  FNC_STEP__PSK_D  STEP.METAL  "D:\WORK_GITHUB\PSK\CODE_PMC\App_Ver\Debug-STD_Dll"
+
+# Working Directory : 
+   D:\WORK_GITHUB\PSK\Program_Exe\PM6_METAL-PSK
+

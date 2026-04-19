@@ -1,0 +1,36 @@
+
+# Learned_Mode가 적용되는 시점
+    * Control_Mode가 Pressure 이고
+    * Hold_Delay(sec)가 0 보다 크고
+    * Position(%) 값이 0 일때    
+    * Learned_Posotion(%)에 설정된 값이
+      Hold_Delay(sec)에 설정된 시간 동안 Position이 유지되다가 
+      Pressure 제어를 시작합니다.  
+
+Ex. 1)
+  5._APC
+    1._Control_Mode    :  Pressure
+    2._Pressure(torr)  :  0.5
+    3._Position(%)     :  70
+    4._Learned_Position(%): 65
+    5._Hold_Delay(sec) :  2
+
+  -> 동작 설명
+    Hold_Delay(sec)애 설정된 2(sec) 동안
+    Position(%)에 설정된 70(%)으로 Postion을 유지하고,
+    2초 후에 Pressure 제어를 시작합니다.
+    
+Ex. 2)
+  5._APC
+    1._Control_Mode    :  Pressure
+    2._Pressure(torr)  :  0.5
+    3._Position(%)     :  0
+    4._Learned_Position(%): 65
+    5._Hold_Delay(sec) :  2
+
+  -> 동작 설명
+    Hold_Delay(sec)애 설정된 2(sec) 동안
+    Position(%)에 설정된 값이 0 일때는 Learned_Postion(%)에 설정된 65로 Position을 유지하고,
+    2초 후에 Pressure 제어를 시작합니다.
+
+  

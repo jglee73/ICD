@@ -1,0 +1,12 @@
+
+# Ref. Directory
+   * "D:\ERROR_REPORT"
+   * 아래의 항목을 통해 변경 가능함.
+     RENAME : LINK.FILE_DIR_SUB
+   
+# File.Ext
+   * PDF
+   * 아래의 항목을 통해 변경 가능함.
+     RENAME : LINK.FILE_EXT
+
+    

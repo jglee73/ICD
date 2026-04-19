@@ -1,0 +1,75 @@
+* OBJECT : OPR_CTC_MODE
+  # LPx Job 시작시 아래의 경로에 Job_Log 폴더를 생성한다.
+    Ref_Dir : "..\EQP_LOG\Wafer_Data\[생성날짜]\"
+    Job_Log 폴더 : "LPx+[PortID]+[LotID]+[JobID]+[CID]"
+      Ex) "LPx+1+LOTID+##PJOB-PTN1+CID1"
+    
+    위의 전체 경로 정보는 아래의 Class 함수를 통해 저장된다.    
+    int SCI__CTC__SCH_MATERIAL_CTRL::Set__DIR_JOB_LOG(const int port_id, const CString& dir_job_log);
+      -. port_id : job이 실행된 loadport의 ID
+      -. dir_job_log : 위에서 생성된 Job_Log 폴더의 경로
+      
+    아래의 파일이 생성된다.
+    [JobID].job_log
+      아래의 정보들이 기록된다.
+        #JOBID=
+        #LOTID=
+        #PORTID=
+        #CSTID=
+        #SLOTMAP.LIST=
+				#SLOTJOB.LIST=
+				#TIME.START=
+    [PPID].rte_log
+      실행시 적용된 Route Recipe
+
+  # 해당 Loadport의 Job이 종료시
+    아래의 함수를 통해 저장된 경로 정보를 받아온다.                
+    int SCI__CTC__SCH_MATERIAL_CTRL::Get__DIR_JOB_LOG(const int port_id, CString& dir_job_log)
+      -. port_id : job이 실행된 loadport의 ID
+      -. dir_job_log : 위에서 생성된 Job_Log 경로을 받아온다.
+    기존 [JobID].job_log 파일에 정보를 추가한다.
+      추가되는 정보는 아래와 같다.
+        #TIME.END=
+				#RESULT=
+
+* OBJECT : PHY_ATM_ROBOT
+  # Wafer 이동시 마다 아래의 정보를 저장한다.
+    아래의 함수를 통해 저장된 경로 정보를 받아온다.                
+    int SCI__CTC__SCH_MATERIAL_CTRL::Get__DIR_JOB_LOG(const int port_id, CString& dir_job_log)
+      -. port_id : job이 실행된 loadport의 ID
+      -. dir_job_log : 위에서 생성된 Job_Log 경로을 받아온다.
+  # Loadport에서 첫번째 Wafer를 Pick할때 아래의 파일이 생성된다.
+    P[PortID]_[SlotID].wfr
+    자세한 정보는 크게 2가지로 분류된다.
+      1) Wafer 정보
+      2) Wafer Moving 정보    
+
+* OBJECT : PHY_VAC_ROBOT
+  # Wafer 이동시 마다 아래의 정보를 저장한다.
+    아래의 함수를 통해 저장된 경로 정보를 받아온다.                
+    int SCI__CTC__SCH_MATERIAL_CTRL::Get__DIR_JOB_LOG(const int port_id, CString& dir_job_log)
+      -. port_id : job이 실행된 loadport의 ID
+      -. dir_job_log : 위에서 생성된 Job_Log 경로을 받아온다.
+    기존 P[PortID]_[SlotID].wfr 파일 내에 아래의 정보를 추가한다.
+      Wafer Moving 정보    
+
+* OBJECT : PHY_PM1 ~ PHY_PM6
+  # Wafer가 PM내에 투입된 이후 진행된 Process 정보를 저장한다.
+    아래의 함수를 통해 저장된 경로 정보를 받아온다.                
+    int SCI__CTC__SCH_MATERIAL_CTRL::Get__DIR_JOB_LOG(const int port_id, CString& dir_job_log)
+      -. port_id : job이 실행된 loadport의 ID
+      -. dir_job_log : 위에서 생성된 Job_Log 경로을 받아온다.
+    기존 P[PortID]_[SlotID].wfr 파일 내에 아래의 정보를 추가한다.
+      Wafer Process 정보가 추가된다.    
+        #ACT.START!
+        #ACT=PROCESS
+        #MD=
+        #RT_OFFSET=
+        #RECIPE=
+        #LOG=
+        #TIME.ACT=
+        #TIME.START=
+        #TIME.END=
+        #RESULT=
+        #ACT.END!
+
