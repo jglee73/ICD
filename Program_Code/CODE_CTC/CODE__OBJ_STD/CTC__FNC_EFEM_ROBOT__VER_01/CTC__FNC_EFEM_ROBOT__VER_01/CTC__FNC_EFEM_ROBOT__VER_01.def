@@ -1,6 +1,0 @@
-; CTC__FNC_EFEM_ROBOT__VER_01.def : Declares the module parameters for the DLL.
-
-LIBRARY      "CTC__FNC_EFEM_ROBOT__VER_01"
-
-EXPORTS
-    ; Explicit exports can go here

@@ -1,6 +1,0 @@
-; PMC__PHY_FRC.def : Declares the module parameters for the DLL.
-
-LIBRARY      "PMC__PHY_FRC"
-
-EXPORTS
-    ; Explicit exports can go here

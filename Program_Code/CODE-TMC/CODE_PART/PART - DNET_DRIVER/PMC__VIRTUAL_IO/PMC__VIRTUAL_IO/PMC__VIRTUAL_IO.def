@@ -1,6 +1,0 @@
-; PMC__VIRTUAL_IO.def : Declares the module parameters for the DLL.
-
-LIBRARY      "PMC__VIRTUAL_IO"
-
-EXPORTS
-    ; Explicit exports can go here
